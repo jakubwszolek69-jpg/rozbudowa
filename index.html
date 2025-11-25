@@ -6,7 +6,7 @@
 <style>
   body { font-family: Arial, sans-serif; padding: 20px; }
   label { display: block; margin-top: 10px; }
-  select, input { padding: 5px; margin-top: 5px; }
+  input { padding: 5px; margin-top: 5px; width: 80px; }
   button { margin-top: 15px; padding: 10px 15px; }
   .result { margin-top: 20px; font-weight: bold; }
 </style>
@@ -18,20 +18,12 @@
   <input type="number" id="pvPower" value="5" min="1" step="0.1">
 </label>
 
-<label>Wybierz magazyn energii:
-  <select id="batteryOption">
-    <option value="5">5 kWh</option>
-    <option value="10">10 kWh</option>
-    <option value="15">15 kWh</option>
-  </select>
-</label>
-
-<label>Koszt falownika hybrydowego (PLN):
-  <input type="number" id="inverterCost" value="7000">
+<label>Pojemność magazynu energii (kWh, 5–50):
+  <input type="number" id="batterySize" value="5" min="5" max="50" step="1">
 </label>
 
 <label>Koszt 1 kWh magazynu (PLN):
-  <input type="number" id="batteryCostPerKWh" value="3000">
+  <input type="number" id="batteryCostPerKWh" value="1500">
 </label>
 
 <button onclick="calculate()">Oblicz koszt</button>
@@ -41,15 +33,20 @@
 <script>
 function calculate() {
     const pvPower = parseFloat(document.getElementById('pvPower').value);
-    const batterySize = parseFloat(document.getElementById('batteryOption').value);
-    const inverterCost = parseFloat(document.getElementById('inverterCost').value);
+    let batterySize = parseFloat(document.getElementById('batterySize').value);
     const batteryCostPerKWh = parseFloat(document.getElementById('batteryCostPerKWh').value);
 
+    // limit magazynu
+    if (batterySize < 5) batterySize = 5;
+    if (batterySize > 50) batterySize = 50;
+
+    // koszt falownika: 2200 zł / 1 kWp
+    const inverterCost = pvPower * 2200;
     const batteryCost = batterySize * batteryCostPerKWh;
     const totalCost = inverterCost + batteryCost;
 
     document.getElementById('result').innerHTML = `
-      <p>Koszt wymiany falownika: ${inverterCost.toLocaleString()} PLN</p>
+      <p>Koszt wymiany falownika (${pvPower.toFixed(1)} kWp): ${inverterCost.toLocaleString()} PLN</p>
       <p>Koszt magazynu ${batterySize} kWh: ${batteryCost.toLocaleString()} PLN</p>
       <p><strong>Łączny koszt inwestycji: ${totalCost.toLocaleString()} PLN</strong></p>
     `;
