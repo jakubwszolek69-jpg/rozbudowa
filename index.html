@@ -26,6 +26,10 @@
   <input type="number" id="newPanels" value="0" min="0" step="1">
 </label>
 
+<label>Rabat (PLN, będzie dodany!):
+  <input type="number" id="rabat" value="0" step="1">
+</label>
+
 <button onclick="calculate()">Oblicz koszt</button>
 
 <div class="result" id="result"></div>
@@ -35,6 +39,7 @@ function calculate() {
     const pvPower = parseFloat(document.getElementById('pvPower').value);
     let batterySize = parseFloat(document.getElementById('batterySize').value);
     const newPanels = parseInt(document.getElementById('newPanels').value);
+    const rabat = parseFloat(document.getElementById('rabat').value);
 
     // ograniczenia pojemności magazynu
     if (batterySize < 5) batterySize = 5;
@@ -43,12 +48,13 @@ function calculate() {
     const inverterCost = pvPower * 2200; // 2200 zł/kWp
     const batteryCost = batterySize * 1500; // 1500 zł/kWh
     const panelsCost = newPanels * 500; // 500 zł za panel
-    const totalCost = inverterCost + batteryCost + panelsCost;
+    const totalCost = inverterCost + batteryCost + panelsCost + rabat; // dodajemy "rabat"
 
     document.getElementById('result').innerHTML = `
       <p>Koszt wymiany falownika (${pvPower.toFixed(1)} kWp): ${inverterCost.toLocaleString()} PLN</p>
       <p>Koszt magazynu ${batterySize} kWh: ${batteryCost.toLocaleString()} PLN</p>
       <p>Koszt nowych paneli (${newPanels} szt.): ${panelsCost.toLocaleString()} PLN</p>
+      <p>Rabat (dodany do kwoty!): ${rabat.toLocaleString()} PLN</p>
       <p><strong>Łączny koszt inwestycji: ${totalCost.toLocaleString()} PLN</strong></p>
     `;
 }
