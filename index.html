@@ -22,8 +22,8 @@
   <input type="number" id="batterySize" value="5" min="5" max="50" step="1">
 </label>
 
-<label>Koszt 1 kWh magazynu (PLN):
-  <input type="number" id="batteryCostPerKWh" value="1500">
+<label>Ilość nowych paneli PV:
+  <input type="number" id="newPanels" value="0" min="0" step="1">
 </label>
 
 <button onclick="calculate()">Oblicz koszt</button>
@@ -34,20 +34,21 @@
 function calculate() {
     const pvPower = parseFloat(document.getElementById('pvPower').value);
     let batterySize = parseFloat(document.getElementById('batterySize').value);
-    const batteryCostPerKWh = parseFloat(document.getElementById('batteryCostPerKWh').value);
+    const newPanels = parseInt(document.getElementById('newPanels').value);
 
-    // limit magazynu
+    // ograniczenia pojemności magazynu
     if (batterySize < 5) batterySize = 5;
     if (batterySize > 50) batterySize = 50;
 
-    // koszt falownika: 2200 zł / 1 kWp
-    const inverterCost = pvPower * 2200;
-    const batteryCost = batterySize * batteryCostPerKWh;
-    const totalCost = inverterCost + batteryCost;
+    const inverterCost = pvPower * 2200; // 2200 zł/kWp
+    const batteryCost = batterySize * 1500; // 1500 zł/kWh
+    const panelsCost = newPanels * 500; // 500 zł za panel
+    const totalCost = inverterCost + batteryCost + panelsCost;
 
     document.getElementById('result').innerHTML = `
       <p>Koszt wymiany falownika (${pvPower.toFixed(1)} kWp): ${inverterCost.toLocaleString()} PLN</p>
       <p>Koszt magazynu ${batterySize} kWh: ${batteryCost.toLocaleString()} PLN</p>
+      <p>Koszt nowych paneli (${newPanels} szt.): ${panelsCost.toLocaleString()} PLN</p>
       <p><strong>Łączny koszt inwestycji: ${totalCost.toLocaleString()} PLN</strong></p>
     `;
 }
