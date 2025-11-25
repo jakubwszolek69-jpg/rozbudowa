@@ -46,7 +46,7 @@ function calculate() {
     if (batterySize > 50) batterySize = 50;
 
     const inverterCost = pvPower * 2200; // 2200 zł/kWp
-    const batteryCost = batterySize * 1500; // 1500 zł/kWh
+    const batteryCost = batterySize * 900; // 900 zł/kWh
     const panelsCost = newPanels * 500; // 500 zł za panel
     const totalCost = inverterCost + batteryCost + panelsCost + rabat; // dodajemy wartość rabatu
 
@@ -62,4 +62,3 @@ function calculate() {
 
 </body>
 </html>
-
