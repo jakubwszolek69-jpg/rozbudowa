@@ -157,12 +157,12 @@ function calculate() {
     <table>
       <tr><th colspan="2">Podsumowanie rozbudowy instalacji</th></tr>
       <tr><td>Moc instalacji</td><td>${pvPower.toFixed(1)} kWp</td></tr>
-      <tr><td>Wymiana falownika</td><td>${formatCurrency(inverterCost)}</td></tr>
+     
       <tr><td>Magazyn energii</td><td>${batterySize} kWh</td></tr>
-      <tr><td>Koszt magazynu</td><td>${formatCurrency(batteryCost)}</td></tr>
+     
       <tr><td>Backup</td><td>${fullBackup ? 'Tak' : 'Nie'}</td></tr>
       <tr><td>Nowe panele</td><td>${newPanels} szt.</td></tr>
-      <tr><td>Koszt paneli</td><td>${formatCurrency(panelsCost)}</td></tr>
+    
       <tr><th>Łączny koszt inwestycji</th><th>${formatCurrency(totalCost)}</th></tr>
     </table>
   `;
