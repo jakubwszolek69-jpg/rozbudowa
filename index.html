@@ -90,6 +90,7 @@ th {
 
 <label>Pojemność magazynu energii:
   <select id="batterySize">
+    <option value="0">Brak magazynu</option>
     <option value="5">5 kWh</option>
     <option value="10">10 kWh</option>
     <option value="12">12 kWh</option>
@@ -134,6 +135,7 @@ function calculate() {
 
   // Stałe ceny magazynów
   const batteryPrices = {
+    0: 0,
     5: 5000,
     10: 8000,
     12: 9000,
